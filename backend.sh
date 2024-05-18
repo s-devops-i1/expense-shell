@@ -1,3 +1,4 @@
+set_root_password=$1
 source common.sh
 dnf module disable nodejs -y  &>>/tmp/expense.log
 dnf module enable nodejs:20 -y  &>>/tmp/expense.log
@@ -38,5 +39,5 @@ print_Task_heading "Installing mysql client"
 dnf install mysql -y &>>/tmp/expense.log
 echo $?
 print_Task_heading "Setting up mysql Initial password"
-mysql -h 54.152.222.238 -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>/tmp/expense.log
+mysql -h 54.152.222.238 -uroot -p${set_root_password} < /app/schema/backend.sql &>>/tmp/expense.log
 echo $?
