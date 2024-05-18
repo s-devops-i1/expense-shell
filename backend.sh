@@ -1,7 +1,4 @@
-print_Task_heading(){
-  echo $1
-  "######## $1 #####" &>>/tmp/expense.log
-}
+source common.sh
 dnf module disable nodejs -y  &>>/tmp/expense.log
 dnf module enable nodejs:20 -y  &>>/tmp/expense.log
 print_Task_heading "Installing nodejs"
