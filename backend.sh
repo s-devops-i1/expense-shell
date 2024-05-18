@@ -7,6 +7,7 @@ echo "Add user"
 useradd expense
 echo $?
 echo "Create Directory"
+rm -rf /app
 mkdir /app
 echo $?
 echo "Remove Old contents"
