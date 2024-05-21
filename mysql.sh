@@ -12,8 +12,8 @@ systemctl start mysqld &>>${LOG}
 print_status $?
 print_task_heading "Setting up root password"
 if [ -z ${setting_root_password}  ]; then
-  mysql_secure_installation --set-root-pass ${setting_root_password} &>>${LOG}
-  else
-    echo -e "\e[33mPlease provide password\e[0m"
-fi
+   echo -e "\e[33mPlease provide password\e[0m"
+ else
+   mysql_secure_installation --set-root-pass ${setting_root_password} &>>${LOG}
+ fi
 print_status $?
