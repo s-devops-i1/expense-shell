@@ -1,3 +1,5 @@
+source common.sh
+
 print_task_heading "Install Nginx"
 dnf install nginx -y  &>>/tmp/expense.log
 print_status $?
