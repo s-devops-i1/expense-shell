@@ -1,45 +1,124 @@
 source common.sh
 
-set_root_password=$1
-
-dnf module disable nodejs -y  &>>$LOG
-dnf module enable nodejs:20 -y  &>>$LOG
-print_Task_heading "Installing nodejs"
-dnf install nodejs -y &>>$LOG
-print_status $?
-print_Task_heading "Add user"
-useradd expense
-echo $?
-print_Task_heading "Create Directory"
+print_task_heading $?
+dnf module disable nodejs -y &>>/tmp/expense.log
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
+dnf module enable nodejs:20 -y &>>/tmp/expense.log
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
+dnf install nodejs -y &>>/tmp/expense.log
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
+UID=$(id)
+if [ "${UID}" != 0 ]; then
+   useradd expense
+ else
+   echo "User Already Exists"
+fi
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
 rm -rf /app
 mkdir /app
-echo $?
-print_Task_heading "Remove Old contents"
-rm -rf /tmp/backend.zip
-echo $?
-print_Task_heading "copy backend services to systemd"
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
 cp backend.service /etc/systemd/system/backend.service
-echo $?
-print_Task_heading "Download backend app"
-curl -o /tmp/backend.zip https://expense-artifacts.s3.amazonaws.com/expense-backend-v2.zip &>>$LOG
-echo $?
-print_Task_heading "change dir"
+curl -o /tmp/backend.zip https://expense-artifacts.s3.amazonaws.com/expense-backend-v2.zip &>>/tmp/expense.log
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
 cd /app
-echo $?
-print_Task_heading "Unzip backend contents"
-unzip /tmp/backend.zip &>>$LOG
-echo $?
-print_Task_heading "Download dependencies"
-npm install &>>$LOG
-echo $?
-print_Task_heading "Starting backend app"
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
+unzip /tmp/backend.zip &>>/tmp/expense.log
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
+npm install
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
+
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
 systemctl daemon-reload
-systemctl enable backend &>>$LOG
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
+systemctl enable backend &>>/tmp/expense.log
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
 systemctl start backend
-echo $?
-print_Task_heading "Installing mysql client"
-dnf install mysql -y &>>$LOG
-echo $?
-print_Task_heading "Setting up mysql Initial password"
-mysql -h 54.152.222.238 -uroot -p${set_root_password} < /app/schema/backend.sql &>>$LOG
-echo $?
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
+dnf install mysql -y &>>/tmp/expense.log
+print_task_heading(){
+  if [ $? = 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+  else
+     echo -e "\e[32mFailure\e[0m"
+  fi
+}
+mysql -h 172.31.33.255 -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>/tmp/expense.log
+

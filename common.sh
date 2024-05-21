@@ -1,12 +1,7 @@
-LOG=/tmp/expense.log
-print_Task_heading(){
-  echo $1
-  "######## $1 #####" &>>/tmp/expense.log
-}
-print_status(){
+print_task_heading(){
   if [ $? = 0 ]; then
-      echo "Success"
+      echo -e "\e[32mSuccess\e[0m"
   else
-    echo "Failure"
+     echo -e "\e[32mFailure\e[0m"
   fi
 }
