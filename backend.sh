@@ -10,8 +10,8 @@ print_task_heading "Install nodejs"
 dnf install nodejs -y &>>$LOG
 print_status $?
 print_task_heading "Creating User"
-UID=$(id expense) &>>$LOG
-if [ "${UID}" != 0 ]; then
+USER_ID=$(id expense) &>>$LOG
+if [ "${USER_ID}" != 0 ]; then
    useradd expense
  fi
  print_status $?
