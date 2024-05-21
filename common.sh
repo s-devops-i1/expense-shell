@@ -1,3 +1,4 @@
+LOG=/tmp/expense.log
 print_status(){
   if [ $? = 0 ]; then
       echo -e "\e[32mSuccess\e[0m"
@@ -6,6 +7,6 @@ print_status(){
   fi
 }
 print_task_heading() {
-  echo "#### $1 ####"
+  echo -e "\e[35m#### $1 ####\e[0m"
 
 }

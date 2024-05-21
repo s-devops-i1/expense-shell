@@ -1,7 +1,7 @@
 source common.sh
 
 print_task_heading "Disable nodejs"
-dnf module disable nodejs -y &>>$LOG
+dnf module disable nodejs -y &>>${LOG}
 print_status $?
 print_task_heading "Enable nodejs"
 dnf module enable nodejs:20 -y &>>$LOG
