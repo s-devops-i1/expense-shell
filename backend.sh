@@ -10,7 +10,7 @@ print_task_heading "Install nodejs"
 dnf install nodejs -y &>>$LOG
 print_status $?
 print_task_heading "Creating User"
-UID=$(id) &>>$LOG
+UID=$(id expense) &>>$LOG
 if [ "${UID}" != 0 ]; then
    useradd expense
  fi
@@ -23,6 +23,7 @@ print_task_heading "Copying config"
 cp backend.service /etc/systemd/system/backend.service
 print_status $?
 print_task_heading "Download backend contents"
+rm -rf /tmp/backend.zip
 curl -o /tmp/backend.zip https://expense-artifacts.s3.amazonaws.com/expense-backend-v2.zip &>>$LOG
 print_status $?
 cd /app
