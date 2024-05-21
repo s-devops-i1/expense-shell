@@ -1,4 +1,5 @@
 source common.sh
+setting_root_password=$1
 
 print_task_heading "Install mysql-server"
 dnf install mysql-server -y &>>${LOG}
@@ -10,5 +11,7 @@ print_task_heading "Starting mysql"
 systemctl start mysqld &>>${LOG}
 print_status $?
 print_task_heading "Setting up root password"
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>${LOG}
+if [ -z ${setting_root_password}  ]; then
+  mysql_secure_installation --set-root-pass ${setting_root_password} &>>${LOG}
+fi
 print_status $?
