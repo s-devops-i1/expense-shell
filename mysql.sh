@@ -13,5 +13,7 @@ print_status $?
 print_task_heading "Setting up root password"
 if [ -z ${setting_root_password}  ]; then
   mysql_secure_installation --set-root-pass ${setting_root_password} &>>${LOG}
+  else
+    echo -e "\e[33mPlease provide password\e[0m"
 fi
 print_status $?
