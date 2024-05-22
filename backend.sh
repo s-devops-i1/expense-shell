@@ -37,5 +37,5 @@ print_task_heading "Installing mysql"
 dnf install mysql -y &>>$LOG
 print_status $?
 print_task_heading "Setting Up Password"
-mysql -h 172.31.33.255 -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG
+mysql -h mysql-dev.shujathdevops.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG
 print_status $?
