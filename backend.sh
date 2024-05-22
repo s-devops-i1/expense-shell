@@ -1,5 +1,8 @@
 source common.sh
 
+app_dir=/app
+component=backend
+
 print_task_heading "Disable nodejs"
 dnf module disable nodejs -y &>>${LOG}
 print_status $?
@@ -15,21 +18,13 @@ if [ $? != 0 ]; then
    useradd expense
  fi
  print_status $?
- rm -rf /app
-print_task_heading "creating Directory"
-mkdir /app
-print_status $?
 print_task_heading "Copying config"
 cp backend.service /etc/systemd/system/backend.service
 print_status $?
-print_task_heading "Download backend contents"
 rm -rf /tmp/backend.zip
-curl -o /tmp/backend.zip https://expense-artifacts.s3.amazonaws.com/expense-backend-v2.zip &>>$LOG
-print_status $?
-cd /app
-print_task_heading "Extracting "
-unzip /tmp/backend.zip &>>$LOG
-print_status $?
+
+app-pre-req
+
 print_task_heading "Install nodejs dependencies"
 npm install &>>$LOG
 print_status $?
