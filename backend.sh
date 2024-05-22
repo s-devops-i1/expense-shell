@@ -1,5 +1,6 @@
 source common.sh
 
+mysql_root_password=$1
 app_dir=/app
 component=backend
 
@@ -16,6 +17,7 @@ print_task_heading "Creating User"
 id expense &>>$LOG
 if [ $? != 0 ]; then
    useradd expense
+   exit 2
  fi
  print_status $?
 print_task_heading "Copying config"
@@ -36,6 +38,6 @@ print_status $?
 print_task_heading "Installing mysql"
 dnf install mysql -y &>>$LOG
 print_status $?
-print_task_heading "Setting Up Password"
-mysql -h mysql-dev.shujathdevops.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG
+print_task_heading "Load schema"
+mysql -h mysql-dev.shujathdevops.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOG
 print_status $?
